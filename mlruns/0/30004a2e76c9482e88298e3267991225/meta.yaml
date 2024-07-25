@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Machine%20Learning/MLFLOW/mlruns/0/30004a2e76c9482e88298e3267991225/artifacts
+end_time: 1721942312738
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 30004a2e76c9482e88298e3267991225
+run_name: resilient-owl-715
+run_uuid: 30004a2e76c9482e88298e3267991225
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721942286092
+status: 3
+tags: []
+user_id: tanma

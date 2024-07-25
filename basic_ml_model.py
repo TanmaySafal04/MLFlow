@@ -53,7 +53,7 @@ def main(n_estimators,max_depth):
     # mlflow.log_param("n_estimators", n_estimators)
         
     # mlflow.log_param("n_estimators", max_depth)
-    return pred,y_test,prob_pred
+    return pred,y_test,prob_pred,rf
 
 def evaluate(y_pred,y_true,prob_pred):
     
@@ -77,12 +77,13 @@ if __name__ == '__main__':
     try:
         with mlflow.start_run():
                 
-            y_pred,y_true,pred_prob = main(n_estimators = parse_args.n_estimators, max_depth = parse_args.max_depth)
+            y_pred,y_true,pred_prob,rf = main(n_estimators = parse_args.n_estimators, max_depth = parse_args.max_depth)
             accuracy,roc = evaluate(y_pred,y_true,pred_prob)  
             mlflow.log_param("n_estimators",parse_args.n_estimators)
             mlflow.log_param("max_depth",parse_args.max_depth)
             mlflow.log_metric("Accuracy_score", accuracy)
             mlflow.log_metric("ROC_AUC_Score", roc)
+            mlflow.sklearn.log_model(rf,"Random Forest Model")
     except Exception as e:
-        raise e
+        raise e 
 
