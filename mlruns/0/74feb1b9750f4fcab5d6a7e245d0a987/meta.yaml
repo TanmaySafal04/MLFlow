@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Machine%20Learning/MLFLOW/mlruns/0/74feb1b9750f4fcab5d6a7e245d0a987/artifacts
+end_time: 1721940657221
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 74feb1b9750f4fcab5d6a7e245d0a987
+run_name: skillful-ox-640
+run_uuid: 74feb1b9750f4fcab5d6a7e245d0a987
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721940647758
+status: 3
+tags: []
+user_id: tanma

@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Machine%20Learning/MLFLOW/mlruns/0/6fd9b3e1fe1c4036892843ddb2ee0fc6/artifacts
+end_time: 1721940531070
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6fd9b3e1fe1c4036892843ddb2ee0fc6
+run_name: exultant-mink-43
+run_uuid: 6fd9b3e1fe1c4036892843ddb2ee0fc6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721940519230
+status: 3
+tags: []
+user_id: tanma

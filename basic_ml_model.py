@@ -34,37 +34,39 @@ def get_data():
     except Exception as e:
         raise e
 
-with mlflow.start_run():
-    def main(n_estimators,max_depth):
-        df = get_data()
-        #Train test split
-        train,test=train_test_split(df)
-        x_train = train.drop(['quality'],axis=1)
-        x_test = test.drop(['quality'],axis=1)
+# with mlflow.start_run():
+def main(n_estimators,max_depth):
+    df = get_data()
+    #Train test split
+    train,test=train_test_split(df)
+    x_train = train.drop(['quality'],axis=1)
+    x_test = test.drop(['quality'],axis=1)
 
-        y_train = train['quality']
-        y_test = test['quality']
-       
-        rf=RandomForestClassifier(n_estimators=n_estimators,max_depth=max_depth)
-        rf.fit(x_train,y_train)
-        pred = rf.predict(x_test)
-        prob_pred = rf.predict_proba(x_test)
-        mlflow.log_param("n_estimators", n_estimators)
-        mlflow.log_param("n_estimators", max_depth)
-        return pred,y_test,prob_pred
-
-    def evaluate(y_pred,y_true,prob_pred):
+    y_train = train['quality']
+    y_test = test['quality']
+    
+    rf=RandomForestClassifier(n_estimators=n_estimators,max_depth=max_depth)
+    rf.fit(x_train,y_train)
+    pred = rf.predict(x_test)
+    prob_pred = rf.predict_proba(x_test)
+            
+    # mlflow.log_param("n_estimators", n_estimators)
         
-        accuracy = accuracy_score(y_true,y_pred)
-        roc = roc_auc_score(y_true,prob_pred,multi_class='ovr')
-        mlflow.log_param("Accuracy", accuracy)
-        mlflow.log_param("ROC_AUC_score Score", roc)
-        print(f"Accuracy Score: {accuracy}")
-        print(f"ROC_AUC_score Score: {roc}")
-        return accuracy,roc
-        #return mae,mse,rmse,r2
+    # mlflow.log_param("n_estimators", max_depth)
+    return pred,y_test,prob_pred
 
-
+def evaluate(y_pred,y_true,prob_pred):
+    
+    accuracy = accuracy_score(y_true,y_pred)
+    roc = roc_auc_score(y_true,prob_pred,multi_class='ovr')
+    
+    # mlflow.log_metric("Accuracy", accuracy)
+        
+    # mlflow.log_metric("ROC_AUC_score Score", roc)
+    print(f"Accuracy Score: {accuracy}")
+    print(f"ROC_AUC_score Score: {roc}")
+    return accuracy,roc
+    
 
 
 if __name__ == '__main__':
@@ -73,8 +75,14 @@ if __name__ == '__main__':
     args.add_argument("--max_depth","-m", default=5, type = int)
     parse_args=args.parse_args()
     try:
-        y_pred,y_true,pred_prob = main(n_estimators = parse_args.n_estimators, max_depth = parse_args.max_depth)
-        evaluate(y_pred,y_true,pred_prob)    
+        with mlflow.start_run():
+                
+            y_pred,y_true,pred_prob = main(n_estimators = parse_args.n_estimators, max_depth = parse_args.max_depth)
+            accuracy,roc = evaluate(y_pred,y_true,pred_prob)  
+            mlflow.log_param("n_estimators",parse_args.n_estimators)
+            mlflow.log_param("max_depth",parse_args.max_depth)
+            mlflow.log_metric("Accuracy_score", accuracy)
+            mlflow.log_metric("ROC_AUC_Score", roc)
     except Exception as e:
         raise e
 
